@@ -31,16 +31,12 @@
                 <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
-        <div class="sidebar-footer">
-            v2.0 &middot; Dang's Beach Resort
-        </div>
+        <div class="sidebar-footer">v2.0 &middot; Dang's Beach Resort</div>
     </aside>
 
     <main class="admin-main">
-        <!-- Toast Container -->
         <div class="toast-container" id="toast-container"></div>
 
-        <!-- Header -->
         <header class="admin-header">
             <div>
                 <h2 id="page-title">Dashboard Overview</h2>
@@ -60,7 +56,7 @@
             </div>
         </header>
 
-        <!-- ========== DASHBOARD TAB ========== -->
+        <!-- DASHBOARD -->
         <div class="tab-content active" id="tab-dashboard">
             <div class="stats-grid-v2" id="stats-grid">
                 <div class="stat-card-v2"><div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h4>Total Bookings</h4><div class="value">--</div></div>
@@ -71,14 +67,10 @@
             <div class="charts-grid">
                 <div class="chart-card">
                     <h4>Revenue Trend</h4>
-                    <div class="chart-container">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
+                    <div class="chart-container"><canvas id="revenueChart"></canvas></div>
                 <div class="chart-card">
                     <h4>Booking Status</h4>
-                    <div class="chart-container sm">
-                        <canvas id="statusChart"></canvas>
-                    </div>
+                    <div class="chart-container sm"><canvas id="statusChart"></canvas></div>
             </div>
 
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
@@ -90,32 +82,19 @@
                     <div class="section-card-body">
                         <div class="table-scroll">
                             <table class="table-v2" id="recent-table">
-                                <thead>
-                                    <tr>
-                                        <th>Guest</th>
-                                        <th>Accommodation</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recent-bookings-list">
-                                    <tr><td colspan="4"><div class="skeleton skeleton-text lg"></div></td></tr>
-                                </tbody>
+                                <thead><tr><th>Guest</th><th>Accommodation</th><th>Amount</th><th>Status</th></tr></thead>
+                                <tbody id="recent-bookings-list"><tr><td colspan="4"><div class="skeleton skeleton-text lg"></div></td></tr></tbody>
                             </table>
                         </div>
                 </div>
                 <div class="section-card">
-                    <div class="section-card-header">
-                        <h3>Recent Activity</h3>
-                    </div>
+                    <div class="section-card-header"><h3>Recent Activity</h3></div>
                     <div class="section-card-body">
-                        <ul class="activity-list" id="activity-list">
-                            <li class="activity-item"><div class="skeleton skeleton-text lg"></div></li>
-                        </ul>
+                        <ul class="activity-list" id="activity-list"><li class="activity-item"><div class="skeleton skeleton-text lg"></div></li></ul>
                     </div>
             </div>
 
-        <!-- ========== RESERVATIONS TAB ========== -->
+        <!-- RESERVATIONS -->
         <div class="tab-content" id="tab-reservations">
             <div class="section-card">
                 <div class="section-card-header">
@@ -133,26 +112,14 @@
                 <div class="section-card-body">
                     <div class="table-scroll">
                         <table class="table-v2">
-                            <thead>
-                                <tr>
-                                    <th>Guest</th>
-                                    <th>Accommodation</th>
-                                    <th>Stay Period</th>
-                                    <th>Guests</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th class="actions">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="all-bookings-list">
-                                <tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading reservations...</p></td></tr>
-                            </tbody>
+                            <thead><tr><th>Guest</th><th>Accommodation</th><th>Stay Period</th><th>Guests</th><th>Amount</th><th>Status</th><th class="actions">Actions</th></tr></thead>
+                            <tbody id="all-bookings-list"><tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading reservations...</p></td></tr></tbody>
                         </table>
                     </div>
                     <div class="pagination" id="res-pagination"></div>
             </div>
 
-        <!-- ========== CUSTOMERS TAB ========== -->
+        <!-- CUSTOMERS -->
         <div class="tab-content" id="tab-customers">
             <div class="section-card">
                 <div class="section-card-header">
@@ -164,25 +131,14 @@
                 <div class="section-card-body">
                     <div class="table-scroll">
                         <table class="table-v2">
-                            <thead>
-                                <tr>
-                                    <th>Customer</th>
-                                    <th>Contact</th>
-                                    <th>Total Bookings</th>
-                                    <th>Total Spent</th>
-                                    <th>Joined</th>
-                                    <th class="actions">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="customers-list">
-                                <tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading customers...</p></td></tr>
-                            </tbody>
+                            <thead><tr><th>Customer</th><th>Contact</th><th>Total Bookings</th><th>Total Spent</th><th>Joined</th><th class="actions">Actions</th></tr></thead>
+                            <tbody id="customers-list"><tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading customers...</p></td></tr></tbody>
                         </table>
                     </div>
                     <div class="pagination" id="cust-pagination"></div>
             </div>
 
-        <!-- ========== ROOMS TAB ========== -->
+        <!-- ROOMS -->
         <div class="tab-content" id="tab-rooms">
             <div class="section-card">
                 <div class="section-card-header">
@@ -194,24 +150,13 @@
                 <div class="section-card-body">
                     <div class="table-scroll">
                         <table class="table-v2">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Price/Night</th>
-                                    <th>Status</th>
-                                    <th class="actions">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rooms-list">
-                                <tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading rooms...</p></td></tr>
-                            </tbody>
+                            <thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Price/Night</th><th>Status</th><th class="actions">Actions</th></tr></thead>
+                            <tbody id="rooms-list"><tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading rooms...</p></td></tr></tbody>
                         </table>
                     </div>
             </div>
 
-        <!-- ========== CALENDAR TAB ========== -->
+        <!-- CALENDAR -->
         <div class="tab-content" id="tab-calendar">
             <div class="section-card">
                 <div class="section-card-header">
@@ -222,12 +167,10 @@
                         <button class="btn btn-primary btn-sm" onclick="renderCalendar()">Today</button>
                     </div>
                 <div class="section-card-body">
-                    <div class="calendar-grid" id="calendar-grid">
-                        <!-- Calendar injected by JS -->
-                    </div>
+                    <div class="calendar-grid" id="calendar-grid"></div>
             </div>
 
-        <!-- ========== REPORTS TAB ========== -->
+        <!-- REPORTS -->
         <div class="tab-content" id="tab-reports">
             <div class="stats-grid-v2" id="report-stats"></div>
             <div class="section-card">
@@ -236,17 +179,13 @@
                     <button class="btn btn-outline btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
                 </div>
                 <div class="section-card-body">
-                    <div class="chart-container" style="height: 350px;">
-                        <canvas id="reportChart"></canvas>
-                    </div>
+                    <div class="chart-container" style="height: 350px;"><canvas id="reportChart"></canvas></div>
             </div>
 
-        <!-- ========== SETTINGS TAB ========== -->
+        <!-- SETTINGS -->
         <div class="tab-content" id="tab-settings">
             <div class="section-card" style="max-width: 600px;">
-                <div class="section-card-header">
-                    <h3>Admin Settings</h3>
-                </div>
+                <div class="section-card-header"><h3>Admin Settings</h3></div>
                 <div class="section-card-body">
                     <div class="form-group">
                         <label>Admin Name</label>
@@ -258,11 +197,12 @@
                     </div>
                     <div class="form-group">
                         <label>Notification Preferences</label>
-
+                        <label class="checkbox-container">Email alerts for new bookings
+                            <input type="checkbox" checked title="Enable new booking alerts">
                             <span class="checkmark"></span>
                         </label>
                         <label class="checkbox-container">Email alerts for cancellations
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked title="Enable cancellation alerts">
                             <span class="checkmark"></span>
                         </label>
                     </div>
@@ -271,16 +211,14 @@
         </div>
     </main>
 
-    <!-- Reservation Detail Modal -->
+    <!-- Reservation Modal -->
     <div class="modal-overlay-v2" id="res-modal">
         <div class="modal-v2">
             <div class="modal-v2-header">
                 <h3>Reservation Details</h3>
                 <button class="modal-close-btn" onclick="closeModal('res-modal')">&times;</button>
             </div>
-            <div class="modal-v2-body" id="res-modal-body">
-                <!-- Injected by JS -->
-            </div>
+            <div class="modal-v2-body" id="res-modal-body"></div>
     </div>
 
     <!-- Room Modal -->
