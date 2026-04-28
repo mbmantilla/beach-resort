@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dang's Beach Resort | Luxury Escape</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <section class="hero">
+        <div class="hero-content animate-fade-in">
+            <h2>Luxury Meets the Ocean</h2>
+            <p>Indulge in a world of serenity and breathtaking views. Your perfect escape awaits at Dang's Beach Resort.</p>
+            <a href="/register" class="btn btn-accent">Experience Now</a>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="accommodations">
+            <div class="accommodations-header">
+                <h3>Our Accommodations</h3>
+                <p>Carefully curated spaces designed for your ultimate comfort.</p>
+            </div>
+            
+            <div id="items-container" class="grid-container">
+                <!-- Items will be loaded here via JS -->
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script>
+        // Load header and footer
+        fetch('/header.html').then(res => res.text()).then(html => document.getElementById('header-container').innerHTML = html);
+        fetch('/footer.html').then(res => res.text()).then(html => document.getElementById('footer-container').innerHTML = html);
+
+        // Fetch items from API
+        fetch('/api/items')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('items-container');
+                data.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card animate-fade-in';
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.innerHTML = `
+                        <div style="height: 250px; background: #eee url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+                        <div class="card-content">
+                            <span class="badge badge-available">${item.type}</span>
+                            <h4 style="margin-top: 1rem;">${item.name}</h4>
+                            <p>${item.description}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; pt-1; margin-top: 1rem; padding-top: 1rem;">
+                                <span style="font-weight: 700; color: var(--primary-color); font-size: 1.2rem;">₱${item.price} <small style="font-weight: 400; font-size: 0.8rem; color: var(--text-muted);">/ night</small></span>
+                                <a href="/login" class="btn btn-primary" style="padding: 0.6rem 1.2rem;">Book</a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+    </script>
+</body>
+</html>

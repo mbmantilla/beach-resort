@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | Dang's Beach Resort</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <header>
+        <div class="logo"><h1>Dang's Resort</h1></div>
+        <nav>
+            <ul>
+                <li><a href="/dashboard">My Dashboard</a></li>
+                <li><a href="#" id="logout-btn" class="btn btn-primary btn-signout">Sign Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container dashboard-main">
+        <div class="dashboard-header">
+            <h2 class="animate-fade-in dashboard-title">Hello, <span id="user-name">Guest</span></h2>
+            <p class="dashboard-subtitle">Manage your stays and explore new destinations.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <!-- Left Column: My Bookings -->
+            <section>
+                <h3 class="section-title">My Reservations</h3>
+                <div id="bookings-list" class="animate-slide-left">
+                    <p class="dashboard-subtitle">Loading your bookings...</p>
+                </div>
+            </section>
+
+            <!-- Right Column: Explore -->
+            <section>
+                <h3 class="section-title">Explore Our Accommodations</h3>
+                <div id="available-items-list" class="items-grid">
+                    <!-- Items will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <!-- Reservation Modal -->
+    <div class="modal-overlay" id="reservation-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="close-modal">&times;</span>
+            <div class="modal-header">
+                <h3>Resort Reservation</h3>
+                <p id="modal-item-name">Accommodation Name</p>
+            </div>
+            
+            <form class="reservation-form" id="booking-form">
+                <input type="hidden" id="modal-item-id" name="itemId">
+                <input type="hidden" id="modal-item-price" name="price">
+                <input type="hidden" id="modal-room-type" name="roomType">
+                
+                <div class="form-body">
+                    <!-- 1. Personal Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-user"></i> 1. Personal Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="cust-fullname" name="fullname" class="form-control" title="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="cust-email" name="email" class="form-control" title="Enter your email address" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Mobile Number</label>
+                                <input type="tel" id="cust-mobile" name="mobile" class="form-control" placeholder="09XXXXXXXXX" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Home Address (Optional)</label>
+                                <input type="text" id="cust-address" name="address" class="form-control" title="Enter your home address (optional)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Booking Details -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-calendar-alt"></i> 2. Booking Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Check-In Date</label>
+                                <input type="date" id="check-in" name="checkIn" class="form-control" title="Select your check-in date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Check-Out Date</label>
+                                <input type="date" id="check-out" name="checkOut" class="form-control" title="Select your check-out date" required>
+                            </div>
+                        </div>
+                        <div class="form-row form-row-three">
+                            <div class="form-group">
+                                <label>Adults</label>
+                                <input type="number" id="num-adults" name="adults" class="form-control" value="1" min="1" title="Number of adult guests" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Children</label>
+                                <input type="number" id="num-children" name="children" class="form-control" value="0" min="0" title="Number of child guests">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Guests</label>
+                                <input type="text" id="total-guests" class="form-control" readonly value="1" title="Total number of guests">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Room Selection -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-bed"></i> 3. Room Selection</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Number of Rooms</label>
+                                <input type="number" id="num-rooms" name="numRooms" class="form-control" value="1" min="1" title="Number of rooms to book" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Bed Preference</label>
+                                <select id="bed-preference" name="bedPreference" class="form-control" title="Select your bed preference">
+                                    <option value="Single">Single</option>
+                                    <option value="Double" selected>Double</option>
+                                    <option value="Queen">Queen</option>
+                                    <option value="King">King</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Additional Requests -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-plus-circle"></i> 4. Additional Requests</h4>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-container">Extra Bed (+₱500/night)
+                                <input type="checkbox" id="extra-bed" name="extraBed">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Early Check-in
+                                <input type="checkbox" id="early-checkin" name="earlyCheckIn">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Late Check-out
+                                <input type="checkbox" id="late-checkout" name="lateCheckOut">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Food Package (+₱1,200/pax)
+                                <input type="checkbox" id="food-package" name="foodPackage">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Special Requests / Notes</label>
+                            <textarea id="special-requests" name="specialRequests" class="form-control" rows="3" placeholder="Any special requests..."></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-footer">
+                    <div class="price-summary">
+                        <div class="summary-line"><span>Nights:</span> <span id="summary-nights">0</span></div>
+                        <div class="summary-line"><span>Base Price:</span> <span id="summary-base">₱0</span></div>
+                        <div class="summary-line total"><span>Total Amount:</span> <span id="summary-total">₱0</span></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">Confirm My Beach Escape</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        fetch('/footer.html').then(res => res.text()).then(html => document.getElementById('footer-container').innerHTML = html);
+
+        async function init() {
+            const res = await fetch('/api/auth/me');
+            if (!res.ok) {
+                window.location.href = '/login';
+                return;
+            }
+            const user = await res.json();
+            document.getElementById('user-name').innerText = user.fullname.split(' ')[0];
+            
+            // Pre-fill personal info
+            document.getElementById('cust-fullname').value = user.fullname;
+            document.getElementById('cust-email').value = user.email;
+            document.getElementById('cust-mobile').value = user.mobile || '';
+            document.getElementById('cust-address').value = user.address || '';
+
+            loadBookings();
+            loadAvailableItems();
+        }
+
+        async function loadBookings() {
+            const res = await fetch('/api/reservations/my');
+            const bookings = await res.json();
+            const container = document.getElementById('bookings-list');
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="card" style="padding: 2rem; text-align: center; background: #fdfdfd; border: 1px dashed #ddd;">
+                        <p style="color: var(--text-muted);">You have no active reservations.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = bookings.map(b => `
+                    <div class="card" style="margin-bottom: 1rem; border-left: 4px solid var(--accent-color);">
+                        <div class="card-content" style="padding: 1.2rem;">
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">${b.item_name}</h4>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">
+                                <p>Stay: ${new Date(b.check_in).toLocaleDateString()} — ${new Date(b.check_out).toLocaleDateString()}</p>
+                                <p style="margin-top: 0.5rem;">Status: <span style="color: var(--primary-color); font-weight: 600; text-transform: uppercase;">${b.status}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function loadAvailableItems() {
+            const res = await fetch('/api/items');
+            const items = await res.json();
+            const container = document.getElementById('available-items-list');
+            container.innerHTML = items.map(item => `
+                <div class="card">
+                    <div style="height: 150px; background: #eee url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=400&q=80') center/cover;"></div>
+                    <div class="card-content" style="padding: 1.2rem;">
+                        <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">${item.name}</h4>
+                        <p style="font-size: 0.8rem; margin-bottom: 1rem; height: 3em; overflow: hidden;">${item.description}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 700; color: var(--primary-color);">₱${item.price}</span>
+                            <button onclick="openBookingModal(${item.id}, '${item.name}', ${item.price})" class="btn btn-primary" style="padding: 0.4rem 1rem; font-size: 0.8rem;">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        const modal = document.getElementById('reservation-modal');
+        const bookingForm = document.getElementById('booking-form');
+        const checkInInput = document.getElementById('check-in');
+        const checkOutInput = document.getElementById('check-out');
+        const numAdultsInput = document.getElementById('num-adults');
+        const numChildrenInput = document.getElementById('num-children');
+        const totalGuestsInput = document.getElementById('total-guests');
+        const extraBedCheckbox = document.getElementById('extra-bed');
+        const foodPackageCheckbox = document.getElementById('food-package');
+        const numRoomsInput = document.getElementById('num-rooms');
+
+        function openBookingModal(id, name, price) {
+            document.getElementById('modal-item-id').value = id;
+            document.getElementById('modal-item-name').innerText = name;
+            document.getElementById('modal-item-price').value = price;
+            document.getElementById('modal-room-type').value = name; // Set room type to accommodation name
+            
+            document.getElementById('summary-base').innerText = `₱${price.toLocaleString()}`;
+            
+            const today = new Date().toISOString().split('T')[0];
+            checkInInput.min = today;
+            checkOutInput.min = today;
+            
+            modal.classList.add('active');
+            updateSummary();
+        }
+
+        function closeBookingModal() {
+            modal.classList.remove('active');
+            bookingForm.reset();
+        }
+
+        document.getElementById('close-modal').addEventListener('click', closeBookingModal);
+        window.addEventListener('click', (e) => { if(e.target === modal) closeBookingModal(); });
+
+        function updateSummary() {
+            const price = parseFloat(document.getElementById('modal-item-price').value) || 0;
+            const checkIn = new Date(checkInInput.value);
+            const checkOut = new Date(checkOutInput.value);
+            
+            // Update Total Guests
+            const adults = parseInt(numAdultsInput.value) || 0;
+            const children = parseInt(numChildrenInput.value) || 0;
+            const totalGuests = adults + children;
+            totalGuestsInput.value = totalGuests;
+
+            if (checkIn && checkOut && checkOut > checkIn) {
+                const diffTime = Math.abs(checkOut - checkIn);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('summary-nights').innerText = diffDays;
+                
+                let total = price * diffDays * (parseInt(numRoomsInput.value) || 1);
+                
+                // Add extra bed cost
+                if (extraBedCheckbox.checked) {
+                    total += 500 * diffDays;
+                }
+
+                // Add food package cost (1200 per person per night)
+                if (foodPackageCheckbox.checked) {
+                    total += 1200 * totalGuests * diffDays;
+                }
+                
+                document.getElementById('summary-total').innerText = `₱${total.toLocaleString()}`;
+            } else {
+                document.getElementById('summary-nights').innerText = '0';
+                document.getElementById('summary-total').innerText = '₱0';
+            }
+        }
+
+        [checkInInput, checkOutInput, numAdultsInput, numChildrenInput, extraBedCheckbox, foodPackageCheckbox, numRoomsInput].forEach(el => {
+            el.addEventListener('change', updateSummary);
+            el.addEventListener('input', updateSummary);
+        });
+
+        bookingForm.onsubmit = async (e) => {
+            e.preventDefault();
+
+            // CAPTCHA Validation
+            const captchaInput = document.getElementById('captcha-input').value;
+            const captchaAnswer = document.getElementById('captcha-answer').value;
+            if (captchaInput !== captchaAnswer) {
+                alert('Security check failed. Please enter the correct answer.');
+                return;
+            }
+
+            // Build JSON data from form
+            const formData = {
+                itemId: document.getElementById('modal-item-id').value,
+                price: document.getElementById('modal-item-price').value,
+                roomType: document.getElementById('modal-room-type').value,
+                fullname: document.getElementById('cust-fullname').value,
+                email: document.getElementById('cust-email').value,
+                mobile: document.getElementById('cust-mobile').value,
+                address: document.getElementById('cust-address').value,
+                checkIn: document.getElementById('check-in').value,
+                checkOut: document.getElementById('check-out').value,
+                adults: document.getElementById('num-adults').value,
+                children: document.getElementById('num-children').value,
+                numRooms: document.getElementById('num-rooms').value,
+                bedPreference: document.getElementById('bed-preference').value,
+                extraBed: extraBedCheckbox.checked,
+                earlyCheckIn: document.getElementById('early-checkin').checked,
+                lateCheckOut: document.getElementById('late-checkout').checked,
+                foodPackage: foodPackageCheckbox.checked,
+                specialRequests: document.getElementById('special-requests').value
+            };
+
+            try {
+                const res = await fetch('/api/reservations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    alert('Reservation submitted successfully! Please wait for confirmation.');
+                    closeBookingModal();
+                    loadBookings();
+                } else {
+                    console.error('Server Error:', data);
+                    alert(data.message || 'Failed to submit reservation');
+                }
+            } catch (err) {
+                console.error('Fetch Error:', err);
+                alert('An error occurred. Please try again.');
+            }
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+        });
+
+        init();
+    </script>
+</body>
+</html>
