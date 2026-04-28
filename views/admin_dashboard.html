@@ -295,27 +295,27 @@
                 <form id="room-form" onsubmit="saveRoom(event)">
                     <input type="hidden" id="room-id">
                     <div class="form-group">
-                        <label>Room Name</label>
-                        <input type="text" id="room-name" class="form-control" required>
+                        <label for="room-name">Room Name</label>
+                        <input type="text" id="room-name" class="form-control" required title="Room name">
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="room-desc" class="form-control" rows="2"></textarea>
+                        <label for="room-desc">Description</label>
+                        <textarea id="room-desc" class="form-control" rows="2" title="Room description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Price per Night (P)</label>
-                        <input type="number" id="room-price" class="form-control" required>
+                        <label for="room-price">Price per Night (P)</label>
+                        <input type="number" id="room-price" class="form-control" required title="Price per night">
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
+                        <label for="room-status">Status</label>
                         <select id="room-status" class="form-control" title="Room status">
                             <option value="available">Available</option>
                             <option value="unavailable">Unavailable</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Image URL</label>
-                        <input type="text" id="room-image" class="form-control" placeholder="https://...">
+                        <label for="room-image">Image URL</label>
+                        <input type="text" id="room-image" class="form-control" placeholder="https://..." title="Image URL">
                     </div>
                     <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem;">
                         <button type="button" class="btn btn-outline" onclick="closeModal('room-modal')">Cancel</button>
